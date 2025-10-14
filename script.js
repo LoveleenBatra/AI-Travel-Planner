@@ -25,7 +25,7 @@ document.getElementById("travelForm").addEventListener("submit", async function 
     const response = await fetch("https://ai-travel-planner-1-qdnd.onrender.com/plan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ destination, budget, days, pdf: wantPDF }),
+      body: JSON.stringify({ destination, budget, days }),
     });
 
     const data = await response.json();
@@ -62,6 +62,7 @@ document.getElementById("travelForm").addEventListener("submit", async function 
     console.error(error);
   }
 });
+
 
 
 
