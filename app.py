@@ -7,12 +7,12 @@ import google.generativeai as genai
 # 🔹 Configure Gemini API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-app = Flask(__name__, static_url_path="", static_folder="generated_files")
+app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def home():
-    return "AI Travel Planner Backend is Running 🚀"
+    return render_template("index.html")
 
 @app.route("/plan", methods=["POST"])
 def plan_trip():
@@ -51,5 +51,6 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
 
