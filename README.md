@@ -89,15 +89,11 @@ Planning a trip on a budget can be challenging for students. Traditional travel 
 ---
 
 ## 🔹 How to Run Locally
-# Clone repo
-git clone https://github.com/<your-username>/ai-travel-planner.git
-cd ai-travel-planner
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Set environment variable
-export GEMINI_API_KEY="YOUR_API_KEY"  # Linux / macOS
+# Set environment variabl
 set GEMINI_API_KEY=YOUR_API_KEY       # Windows
 
 # Run Flask app
