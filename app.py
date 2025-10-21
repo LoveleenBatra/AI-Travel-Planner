@@ -42,7 +42,7 @@ def plan_trip():
         model = genai.GenerativeModel("gemini-2.5-flash")
         response = model.generate_content(
             prompt,
-            generation_config={"max_output_tokens": 400}
+            generation_config={"max_output_tokens": 2000}
         )
         signal.alarm(0)
         itinerary_text = None
@@ -76,6 +76,7 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
