@@ -1,5 +1,6 @@
 Flask
-Flask-Cors
-google-generativeai
-fpdf
 gunicorn
+flask-cors
+google-generativeai
+python-dotenv
+fpdf
