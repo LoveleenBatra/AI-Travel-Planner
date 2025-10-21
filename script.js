@@ -22,7 +22,7 @@ document.getElementById("travelForm").addEventListener("submit", async function 
   }, 500); // change emoji every 0.5s
 
   try {
-    const response = await fetch("https://ai-travel-planner-1-qdnd.onrender.com/plan", {
+    const response = await fetch("https://ai-travel-planner-production-4ffa.up.railway.app/plan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ destination, budget, days }),
@@ -62,6 +62,7 @@ document.getElementById("travelForm").addEventListener("submit", async function 
     console.error(error);
   }
 });
+
 
 
 
