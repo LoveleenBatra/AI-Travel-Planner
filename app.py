@@ -10,7 +10,7 @@ import google.generativeai as genai
 # Configure Gemini API
 #genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # 🔹 Configure Gemini API
-genai.configure(api_key="GEMINI_API_KEY")
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 app = Flask(__name__)
 CORS(app)
@@ -57,6 +57,7 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
