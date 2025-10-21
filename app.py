@@ -25,36 +25,42 @@ def plan_trip():
     if not destination or not days:
         return jsonify({"error": "Destination and days are required"}), 400
 
-    prompt = f"""
-    Create a detailed {days}-day student-friendly travel itinerary for {destination}.
-    Include budget-friendly food, transport, and sightseeing recommendations.
-    Total budget: ₹{budget if budget else 'not specified'}.
-    """
+    prompt = (
+        f"You are an expert travel planner. Create a safe, family-friendly, detailed {days}-day travel itinerary "
+        f"for {destination}. Include day-wise plan, travel tips, and estimated daily budget in USD ({budget}). "
+        f"Ensure the response is professional, polite, and does not include any unsafe or restricted content."
+    )
+
 
     try:
         model = genai.GenerativeModel("gemini-2.5-flash")
-        response = model.generate_content(
-            prompt,
-            generation_config={"max_output_tokens": 1000},
-            request_options={"timeout": 40}
-        )
-        print("🔹 Gemini raw response:", response)
-
-        try:
-            if hasattr(response, "text") and response.text.strip():
-                itinerary_text = response.text.strip()
-            elif hasattr(response, "candidates") and len(response.candidates) > 0:
-                parts = response.candidates[0].content.parts
-                itinerary_text = " ".join(p.text for p in parts if hasattr(p, "text"))
+        response = model.generate_content(prompt)
+    
+        itinerary_text = None
+    
+        # Try standard .text property first
+        if hasattr(response, "text") and response.text and response.text.strip():
+            itinerary_text = response.text.strip()
+    
+        # Try extracting from candidate parts
+        elif hasattr(response, "candidates") and len(response.candidates) > 0:
+            parts = response.candidates[0].content.parts
+            itinerary_text = " ".join(p.text for p in parts if hasattr(p, "text"))
+    
+        # If still empty, check for finish_reason
+        if not itinerary_text:
+            finish_reason = getattr(response.candidates[0], "finish_reason", None)
+            if finish_reason == 2:
+                itinerary_text = "⚠️ Gemini stopped early due to content filters. Try a different destination or prompt."
             else:
-                itinerary_text = "No itinerary text returned from Gemini."
-        except Exception as e:
-            itinerary_text = f"Error reading Gemini response: {str(e)}"
+                itinerary_text = "⚠️ No itinerary received from Gemini. Please try again."
+    
+    except Exception as e:
+        itinerary_text = f"Error reading Gemini response: {str(e)}"
+    
+    result = {"itinerary": itinerary_text}
+    return jsonify(result)
 
-
-        result = {"itinerary": itinerary_text}
-
-        return jsonify(result)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -63,6 +69,7 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
