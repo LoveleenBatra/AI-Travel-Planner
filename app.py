@@ -38,12 +38,19 @@ def plan_trip():
             generation_config={"max_output_tokens": 1000},
             request_options={"timeout": 40}
         )
+        print("🔹 Gemini raw response:", response)
 
+        try:
+            if hasattr(response, "text") and response.text.strip():
+                itinerary_text = response.text.strip()
+            elif hasattr(response, "candidates") and len(response.candidates) > 0:
+                parts = response.candidates[0].content.parts
+                itinerary_text = " ".join(p.text for p in parts if hasattr(p, "text"))
+            else:
+                itinerary_text = "No itinerary text returned from Gemini."
+        except Exception as e:
+            itinerary_text = f"Error reading Gemini response: {str(e)}"
 
-        if hasattr(response, "text") and response.text.strip():
-            itinerary_text = response.text.strip()
-        else:
-            itinerary_text = "No itinerary text returned from Gemini."
 
         result = {"itinerary": itinerary_text}
 
@@ -56,6 +63,7 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
