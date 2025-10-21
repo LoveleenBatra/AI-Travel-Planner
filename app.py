@@ -33,7 +33,12 @@ def plan_trip():
 
     try:
         model = genai.GenerativeModel("gemini-2.5-flash")
-        response = model.generate_content(prompt)
+        response = model.generate_content(
+            prompt,
+            generation_config={"max_output_tokens": 1000},
+            request_options={"timeout": 40}
+        )
+
 
         if hasattr(response, "text") and response.text.strip():
             itinerary_text = response.text.strip()
@@ -51,6 +56,7 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
