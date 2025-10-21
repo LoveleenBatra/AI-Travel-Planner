@@ -17,7 +17,7 @@ Planning a trip on a budget can be challenging for students. Traditional travel 
 | Backend | Python, Flask, Flask-CORS |
 | AI Model | Google Gemini API (gemini-2.5-flash) |
 | Frontend | HTML, CSS, JavaScript |
-| Deployment | Render.com |
+| Deployment | Railway.com |
 | PDF/Text Export | Skipped (planned but not included due to API limitations) |
 | Database (Optional) | SQLite (for storing previous itineraries) |
 
@@ -42,8 +42,8 @@ Planning a trip on a budget can be challenging for students. Traditional travel 
 3. Display generated itinerary **below the form** without hiding it.
 4. Convert Markdown-style Gemini output to HTML for better readability.
 
-### 3️⃣ Deployment (Render.com)
-1. Create a Render web service.
+### 3️⃣ Deployment (Railway.com)
+1. Create a Railway web service.
 2. Set environment variable `GEMINI_API_KEY`.
 3. Deploy backend as Flask app (`app.py`).
 4. Serve frontend as static HTML/CSS/JS (option B: separate HTML file).
@@ -82,7 +82,7 @@ Planning a trip on a budget can be challenging for students. Traditional travel 
 
 1. [Flask Documentation](https://flask.palletsprojects.com/)
 2. [Google Generative AI (Gemini) API](https://developers.generativeai.google/)
-3. [Render Deployment Guide](https://render.com/docs)
+3. [Railway Deployment Guide](https://railway.com/docs)
 4. [FPDF Documentation](https://pyfpdf.github.io/fpdf2/)
 5. JavaScript Fetch API – MDN Web Docs
 
